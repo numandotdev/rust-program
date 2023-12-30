@@ -1,18 +1,22 @@
-use std::io;
+// main.rs
+
+extern crate my_project_name;
+
+use my_project_name::currency;
+use my_project_name::maths::maths_program;
 
 fn main() {
-    let mut input = String::new();
-    println!("Welcome to Currency Converter Console App");
-    println!("Enter your amount $");
-    
-    io::stdin().read_line(&mut input).expect("Wrong Input");
+    // Use the function from currency.rs
+    // let amount_in_eur = 50.0;
+    // let amount_in_usd = currency::convert_to_usd(amount_in_eur);
 
-    let dollar: f32 = input
-        .trim()
-        .parse()
-        .expect("Failed to parse string into float");
+    // println!("Amount in USD: {}", amount_in_usd);
 
-    let inr: f32 = dollar * 83.44;
-
-    println!("${}  is ₹{}", dollar, inr);
+    // Use the function from maths_program.rs
+    let number = 10;
+    if maths_program::is_even(number) {
+        println!("{} is even", number);
+    } else {
+        println!("{} is odd", number);
+    }
 }
