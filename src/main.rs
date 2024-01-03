@@ -13,7 +13,12 @@ fn main() {
     let fruits = vec!["Banana", "Mango", "Apple", "Grapes", "Pinaple", "Orange"];
     println!("{:?}", fruits);
 
+    for (index, fruit) in fruits.iter().enumerate() {
+        println!("The name of the fruit is {} at index {}", fruit, index);
+    };
 
+    
+    
     // let result = currency_tool();
     // println!("{}", result);
 
