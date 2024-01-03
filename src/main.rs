@@ -1,4 +1,9 @@
-use std::{/*any::{type_name, Any}, io,*/ vec};
+// use std::fs::File;
+// use std::io::prelude::*;
+// use std::fs;
+
+// #[path = "./server/api.rs"]
+// mod server;
 
 // mod currency;
 
@@ -8,17 +13,55 @@ use std::{/*any::{type_name, Any}, io,*/ vec};
 
 // use maths::is_even;
 
-fn main() {
+use reqwest;
 
-    let fruits = vec!["Banana", "Mango", "Apple", "Grapes", "Pinaple", "Orange"];
-    println!("{:?}", fruits);
+async fn make_api_request(api_url: &str) -> Result<(), reqwest::Error> {
+    // Make a GET request to the API
+    let response = reqwest::get(api_url).await?;
 
-    for (index, fruit) in fruits.iter().enumerate() {
-        println!("The name of the fruit is {} at index {}", fruit, index);
-    };
+    // Check if the request was successful (status code 2xx)
+    if response.status().is_success() {
+        // Read the response body as a string
+        let body = response.text().await?;
+        println!("API Response: {}", body);
+    } else {
+        println!("API Request failed with status: {}", response.status());
+    }
 
-    
-    
+    Ok(())
+}
+
+#[tokio::main]
+async fn main() {
+        // Specify the URL of the API you want to call
+        let api_url = "https://jsonplaceholder.typicode.com/todos/1";
+
+        // Call the function to make the API request
+        if let Err(err) = make_api_request(api_url).await {
+            eprintln!("Error: {}", err);
+        }
+
+
+    // server::api_call("https://jsonplaceholder.typicode.com/todos");
+    // const FILE_PATH: &str = "files/data.txt";
+    // let _ = fs::write(FILE_PATH, "Data is changed!!!!");
+    // let file_content =fs::read_to_string(FILE_PATH).expect("Unable to read file content!");
+    // println!("{}", file_content);
+
+    // --snip--
+    //  println!("In file {}", "files/data.txt");
+
+    //  let contents = fs::read_to_string("files/data.txt")
+    //      .expect("Should have been able to read the file");
+    //  println!("With text:\n{contents}");
+
+    // let fruits = vec!["Banana", "Mango", "Apple", "Grapes", "Pinaple", "Orange"];
+    // println!("{:?}", fruits);
+
+    // for (index, fruit) in fruits.iter().enumerate() {
+    //     println!("The name of the fruit is {} at index {}", fruit, index);
+    // };
+
     // let result = currency_tool();
     // println!("{}", result);
 
